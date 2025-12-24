@@ -1,53 +1,92 @@
-# Firebase Setup Instructions
+# Firebase Setup Instructions - REQUIRED ⚠️
 
-## Step 1: Create Firebase Project
+Your InviteSphere site is ready to deploy! You just need to set up Firebase.
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Click "Add project" or select existing project
-3. Follow the setup wizard
+## Step 1: Open Firebase Console
 
-## Step 2: Get Firebase Configuration
+👉 **[Open Firebase Console](https://console.firebase.google.com/project/invitesphere-f32fe)**
 
-1. In Firebase Console, click the gear icon ⚙️ → Project settings
-2. Scroll down to "Your apps" section
-3. Click the web icon `</>` to register your web app
-4. Copy the `firebaseConfig` object
+(Already have a project at `invitesphere-f32fe` - just complete the setup below)
 
-## Step 3: Update firebase-config.js
+## Step 2: Create Firestore Database
 
-Replace the values in `public/js/firebase-config.js` with your actual Firebase config:
+1. Click **"Firestore Database"** in left menu
+2. If not created yet, click **"Create Database"**
+3. Choose **"Start in production mode"** 
+4. Select region closest to you (e.g., Asia-South1 for India)
+5. Click **"Create Database"** and wait (takes 1-2 minutes)
 
-```javascript
-const firebaseConfig = {
-  apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abc123def456"
-};
-```
+## Step 3: Set Up Security Rules
 
-## Step 4: Enable Firestore Database
-
-1. In Firebase Console, go to **Firestore Database**
-2. Click "Create database"
-3. Choose "Start in test mode" (for development)
-4. Select your Cloud Firestore location
-5. Click "Enable"
-
-## Step 5: Set Firestore Security Rules (Optional for Production)
-
-Go to Firestore → Rules and update:
+Go to **Firestore Database** → **Rules** tab and paste:
 
 ```
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow read/write for guest events
-    match /guestEvents/{document=**} {
+    match /rsvps/{document=**} {
       allow read, write: if true;
     }
+    match /events/{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
+
+Click **"Publish"**
+
+## Step 4: Enable Authentication
+
+1. Go to **"Authentication"** in left menu
+2. Click **"Get Started"**  
+3. **Enable Email/Password provider:**
+   - Click "Email/Password"
+   - Toggle "Enable"
+   - Click "Save"
+
+4. **Enable Google Sign-In:**
+   - Click "Google"
+   - Toggle "Enable"
+   - Add your email as test user
+   - Click "Save"
+
+## Step 5: Verify Firebase Config
+
+Your config is already in `/js/firebase-config.js`:
+
+```javascript
+const firebaseConfig = {
+  apiKey: "AIzaSyC7Fv8KV143dVpK53aXI4EES1eMueK732c",
+  authDomain: "invitesphere-f32fe.firebaseapp.com",
+  projectId: "invitesphere-f32fe",
+  storageBucket: "invitesphere-f32fe.firebasestorage.app",
+  messagingSenderId: "1024164723892",
+  appId: "1:1024164723892:web:92f373dfe83e65b57cebe1"
+};
+```
+
+This is already configured - no changes needed!
+
+## ✅ Test Your Site
+
+1. Visit: **https://kavyaundela.github.io/event-invite-website/**
+2. Click **"Get Started"**
+3. Try **"Guest Access"** or **"Admin"** login
+4. Submit test RSVP
+5. Check admin dashboard
+
+## 🐛 If Something's Wrong
+
+Visit the diagnostic page: **https://kavyaundela.github.io/event-invite-website/diagnostic.html**
+
+This will show you:
+- ✅ Firebase Connection Status
+- ✅ Database Status  
+- ✅ Authentication Status
+- ✅ LocalStorage Status
+
+Share any red errors with me!
     // Add more specific rules for production
   }
 }
