@@ -13,32 +13,64 @@ if (db) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('🔧 RSVP page script loaded - v2');
+  
+  // Update debug timestamp
+  const loadTimeEl = document.getElementById('loadTime');
+  if (loadTimeEl) {
+    loadTimeEl.textContent = new Date().toLocaleTimeString();
+  }
+  
   const rsvpForm = document.getElementById('rsvpForm');
   const successMessage = document.getElementById('successMessage');
   const formStatus = document.getElementById('formStatus');
 
+  console.log('Form elements found:', {
+    rsvpForm: !!rsvpForm,
+    successMessage: !!successMessage,
+    formStatus: !!formStatus
+  });
+
+  if (!rsvpForm) {
+    console.error('❌ RSVP form not found on page!');
+    return;
+  }
+
   if (rsvpForm) {
+    console.log('✓ Attaching submit handler to form');
+    
     rsvpForm.addEventListener('submit', async function(e) {
       e.preventDefault();
+      console.log('🚀 Form submitted!');
 
       const name = document.getElementById('name').value.trim();
       const guests = document.getElementById('guests').value;
       const attendRadio = document.querySelector('input[name="attend"]:checked');
       const message = document.getElementById('message').value.trim();
 
+      console.log('Form values:', {
+        name,
+        guests,
+        attendRadio: !!attendRadio,
+        message
+      });
+
       // Validate name
       if (!name) {
+        console.log('❌ Name validation failed');
         showError('Please enter your name');
         return;
       }
 
       // Validate attendance selection
       if (!attendRadio) {
+        console.log('❌ Attendance validation failed');
         showError('Please select whether you can attend');
         return;
       }
 
       const attend = attendRadio.value;
+      console.log('✓ Validation passed, attend:', attend);
 
       // Prepare data (attach event info if present)
       const guestData = JSON.parse(sessionStorage.getItem('guestData') || '{}');
