@@ -1,11 +1,14 @@
 // ============= RSVP FORM HANDLER =============
+import { db } from './firebase-config.js';
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
 document.addEventListener('DOMContentLoaded', function() {
   const rsvpForm = document.getElementById('rsvpForm');
   const successMessage = document.getElementById('successMessage');
   const formStatus = document.getElementById('formStatus');
 
   if (rsvpForm) {
-    rsvpForm.addEventListener('submit', function(e) {
+    rsvpForm.addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const name = document.getElementById('name').value.trim();
@@ -26,44 +29,39 @@ document.addEventListener('DOMContentLoaded', function() {
         guests: parseInt(guests),
         attend: attend === 'yes',
         message: message,
-        eventName: guestData.eventName,
-        eventType: guestData.eventType,
-        eventDate: guestData.eventDate,
-        eventTime: guestData.eventTime,
-        eventLocation: guestData.eventLocation,
+        eventName: guestData.eventName || '',
+        eventType: guestData.eventType || '',
+        eventDate: guestData.eventDate || '',
+        eventTime: guestData.eventTime || '',
+        eventLocation: guestData.eventLocation || '',
         createdAt: new Date().toISOString()
       };
 
-      // Send to server
-      fetch('/api/rsvp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(rsvpData)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          // Hide form, show success
-          rsvpForm.style.display = 'none';
-          successMessage.style.display = 'block';
-        } else {
-          // Fallback to local storage
-          const local = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');
-          local.push(rsvpData);
-          localStorage.setItem('rsvpsLocal', JSON.stringify(local));
-          rsvpForm.style.display = 'none';
-          successMessage.style.display = 'block';
-        }
-      })
-      .catch(error => {
+      try {
+        // Save to Firestore
+        await addDoc(collection(db, 'rsvps'), rsvpData);
+        console.log('RSVP saved to Firestore successfully');
+        
+        // Also save to localStorage as backup
         const local = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');
         local.push(rsvpData);
         localStorage.setItem('rsvpsLocal', JSON.stringify(local));
+        
+        // Hide form, show success
         rsvpForm.style.display = 'none';
         successMessage.style.display = 'block';
-      });
+      } catch (error) {
+        console.error('Error saving RSVP:', error);
+        
+        // Fallback to local storage only
+        const local = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');
+        local.push(rsvpData);
+        localStorage.setItem('rsvpsLocal', JSON.stringify(local));
+        
+        // Still show success to user
+        rsvpForm.style.display = 'none';
+        successMessage.style.display = 'block';
+      }
     });
   }
 

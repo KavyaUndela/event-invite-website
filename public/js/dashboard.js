@@ -1,5 +1,6 @@
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
 // Utility helpers
 const byId = (id) => document.getElementById(id);
@@ -68,13 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let list = [];
     try {
-      const res = await fetch('/api/rsvps');
-      const json = await res.json();
-      list = json.rsvps || json.data || [];
+      // Fetch from Firestore
+      const q = query(collection(db, 'rsvps'), orderBy('createdAt', 'desc'));
+      const querySnapshot = await getDocs(q);
+      list = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      console.log(`Loaded ${list.length} RSVPs from Firestore`);
 
-      // If server empty, fallback to local
-      if ((!Array.isArray(list) || list.length === 0)) {
+      // If Firestore is empty, try localStorage as fallback
+      if (list.length === 0) {
         list = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');
+        console.log(`Loaded ${list.length} RSVPs from localStorage`);
       }
 
       if (empty) empty.style.display = 'none';
@@ -106,9 +114,45 @@ document.addEventListener('DOMContentLoaded', () => {
       totalGuests.textContent = guestsTotal;
     } catch (err) {
       console.error('RSVP load error', err);
+      
+      // Fallback to localStorage on error
+      list = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');
+      console.log(`Error loading from Firestore, using ${list.length} local RSVPs`);
+      
       if (errorMessage) {
         errorMessage.style.display = 'block';
-        errorMessage.textContent = 'Unable to load RSVPs. Please check the server.';
+        errorMessage.textContent = 'Using cached RSVPs. Check Firebase connection.';
+      }
+      
+      // Still render the local data
+      if (list.length > 0 && tbody) {
+        if (empty) empty.style.display = 'none';
+        if (tableWrapper) tableWrapper.style.display = 'block';
+        tbody.innerHTML = '';
+
+        let attending = 0;
+        let guestsTotal = 0;
+
+        list.forEach(item => {
+          const row = document.createElement('tr');
+          const attendingYes = item.attend === true || item.attend === 'yes';
+          if (attendingYes) attending += 1;
+          guestsTotal += Number(item.guests || 0);
+
+          row.innerHTML = `
+            <td><strong>${item.name || ''}</strong>${item.eventName ? `<br><small style="color:#6b7280;">Event: ${item.eventName}</small>` : ''}</td>
+            <td>${item.guests || 0}</td>
+            <td><span class="badge ${attendingYes ? 'badge-yes' : 'badge-no'}">${attendingYes ? '✓ Yes' : '✗ No'}</span></td>
+            <td>${item.message || '-'}</td>
+            <td>${item.createdAt ? new Date(item.createdAt).toLocaleString() : '-'}</td>
+          `;
+          tbody.appendChild(row);
+        });
+
+        totalCount.textContent = list.length;
+        attendingCount.textContent = attending;
+        notAttendingCount.textContent = list.length - attending;
+        totalGuests.textContent = guestsTotal;
       }
     } finally {
       if (loading) loading.textContent = '';
