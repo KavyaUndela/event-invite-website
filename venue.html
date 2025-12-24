@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Venue & Location – InviteSphere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ============= NAVBAR ============= -->
+  <header class="site-header">
+    <nav class="navbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">☰</button>
+      <div class="brand-mark">
+        <span class="brand-icon">★</span>
+        <span class="brand-name">InviteSphere</span>
+      </div>
+      <div style="width: 40px;"></div>
+    </nav>
+  </header>
+
+  <!-- ============= SIDEBAR NAVIGATION ============= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">×</button>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item" title="Home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="details.html" class="nav-item" title="Event Details">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Details</span>
+        </a>
+        <a href="venue.html" class="nav-item active" title="Venue & Location">
+          <span class="nav-icon">📍</span>
+          <span class="nav-label">Venue</span>
+        </a>
+        <a href="rsvp.html" class="nav-item" title="RSVP">
+          <span class="nav-icon">✓</span>
+          <span class="nav-label">RSVP</span>
+        </a>
+        <a href="gallery.html" class="nav-item" title="Gallery">
+          <span class="nav-icon">🖼</span>
+          <span class="nav-label">Gallery</span>
+        </a>
+      </nav>
+
+      <!-- ============= COUNTDOWN TIMER ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Event Countdown</h4>
+        <div class="countdown-grid" id="countdownTimer">
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Mins</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Secs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= VENUE CARD ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Venue Location</h4>
+        <div class="venue-card">
+          <div class="venue-icon">📍</div>
+          <p class="venue-name">Grand Ballroom</p>
+          <p class="venue-address">123 Celebration Street</p>
+          <p class="venue-city">Downtown City, State</p>
+          <a href="venue.html" class="venue-link">View Map →</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============= PAGE CONTENT ============= -->
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <h1>Venue & Location</h1>
+        <p class="subtitle">Find us at the Grand Ballroom</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="venue-content">
+          <!-- Map -->
+          <div class="map-container">
+            <iframe src="https://maps.google.com/maps?q=Andhra%20Pradesh%2C%20India&z=7&output=embed" width="100%" height="400" style="border:0; border-radius: 16px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <!-- Venue Details -->
+          <div class="venue-details">
+            <h2>Grand Ballroom</h2>
+            <p class="venue-address">
+              123 Celebration Street<br>
+              Downtown City, State 12345<br>
+              United States
+            </p>
+
+            <div class="venue-info-grid">
+              <div class="venue-info">
+                <h4>📍 Location</h4>
+                <p>Located in the heart of downtown with easy access to public transportation</p>
+              </div>
+              <div class="venue-info">
+                <h4>🅿️ Parking</h4>
+                <p>Complimentary parking available. Valet service provided for guests</p>
+              </div>
+              <div class="venue-info">
+                <h4>🚕 Transportation</h4>
+                <p>5 minutes from downtown station. Multiple taxi and rideshare options</p>
+              </div>
+              <div class="venue-info">
+                <h4>♿ Accessibility</h4>
+                <p>Fully accessible venue with wheelchair access and accessible restrooms</p>
+              </div>
+            </div>
+
+            <!-- Capacity -->
+            <div class="capacity-box">
+              <h3>Venue Capacity</h3>
+              <p>The Grand Ballroom can accommodate up to 500 guests with elegant ambiance and state-of-the-art facilities.</p>
+            </div>
+
+            <!-- Amenities -->
+            <div class="amenities-section">
+              <h3>Amenities</h3>
+              <ul class="amenities-list">
+                <li>✓ Full Bar Service</li>
+                <li>✓ Gourmet Catering</li>
+                <li>✓ Sound & Lighting System</li>
+                <li>✓ Climate Control</li>
+                <li>✓ Wedding/Event Suite</li>
+                <li>✓ Professional Staff</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="section">
+      <div class="container">
+        <div class="nav-links-section">
+          <a href="details.html" class="btn subtle">Back to Details</a>
+          <a href="rsvp.html" class="btn primary">Confirm Attendance</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 InviteSphere. Your celebration, beautifully organized.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/navigation.js"></script>
+  <script>
+    // Update venue with guest event data
+    document.addEventListener('DOMContentLoaded', () => {
+      const guestData = JSON.parse(sessionStorage.getItem('guestData') || '{}');
+      const eventInfo = JSON.parse(sessionStorage.getItem('eventInfo') || '{}');
+      
+      const location = guestData.eventLocation || eventInfo.location;
+      const eventName = guestData.eventName || eventInfo.name;
+      
+      if (location) {
+        // Update page title
+        const pageTitle = document.querySelector('.hero-section h1');
+        if (pageTitle) pageTitle.textContent = 'Venue & Location';
+        
+        const subtitle = document.querySelector('.hero-section .subtitle');
+        if (subtitle) subtitle.textContent = `Find us in Andhra Pradesh`;
+        
+        // Update venue details
+        const venueTitle = document.querySelector('.venue-details h2');
+        if (venueTitle) venueTitle.textContent = location;
+        
+        const venueAddress = document.querySelector('.venue-details .venue-address');
+        if (venueAddress) venueAddress.innerHTML = `<strong>${location}</strong><br>Please use this address for navigation`;
+        
+        // Always show Andhra Pradesh map (no API key required)
+        const mapIframe = document.querySelector('.map-container iframe');
+        if (mapIframe) {
+          mapIframe.src = `https://maps.google.com/maps?q=Andhra%20Pradesh%2C%20India&z=7&output=embed`;
+        }
+        
+        // Update sidebar venue card
+        const venueCardName = document.querySelector('.venue-card .venue-name');
+        const venueCardAddress = document.querySelector('.venue-card .venue-address');
+        if (venueCardName) venueCardName.textContent = location;
+        if (venueCardAddress) venueCardAddress.textContent = location;
+      }
+    });
+  </script>
+</body>
+</html>

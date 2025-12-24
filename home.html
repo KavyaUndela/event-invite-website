@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>InviteSphere – Smart Event Management Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ============= SIDEBAR NAVIGATION ============= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">×</button>
+      <nav class="sidebar-nav">
+        <a href="home.html" class="nav-item active" title="Home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="details.html" class="nav-item" title="Event Details">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Details</span>
+        </a>
+        <a href="venue.html" class="nav-item" title="Venue & Location">
+          <span class="nav-icon">📍</span>
+          <span class="nav-label">Venue</span>
+        </a>
+        <a href="rsvp.html" class="nav-item" title="RSVP">
+          <span class="nav-icon">✓</span>
+          <span class="nav-label">RSVP</span>
+        </a>
+        <a href="gallery.html" class="nav-item" title="Gallery">
+          <span class="nav-icon">🖼</span>
+          <span class="nav-label">Gallery</span>
+        </a>
+      </nav>
+
+      <!-- ============= COUNTDOWN TIMER ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Event Countdown</h4>
+        <div class="countdown-grid" id="countdownTimer">
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Mins</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Secs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= VENUE CARD ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Venue Location</h4>
+        <div class="venue-card">
+          <div class="venue-icon">📍</div>
+          <p class="venue-name">Grand Ballroom</p>
+          <p class="venue-address">123 Celebration Street</p>
+          <p class="venue-city">Downtown City, State</p>
+          <a href="venue.html" class="venue-link">View Map →</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============= NAVBAR ============= -->
+  <header class="site-header">
+    <nav class="navbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">☰</button>
+      <div class="brand-mark">
+        <span class="brand-icon">★</span>
+        <span class="brand-name">InviteSphere</span>
+      </div>
+      <div style="width: 40px;"></div>
+    </nav>
+  </header>
+
+  <!-- ============= HERO / LANDING ============= -->
+  <section class="hero" id="top">
+    <div class="hero-overlay"></div>
+    <div class="hero-content-wrapper-login">
+      <!-- LEFT SIDE - Event Info -->
+      <div class="hero-left">
+        <p class="hero-eyebrow">Welcome to InviteSphere</p>
+        <h1 class="hero-title">Your celebration, beautifully organized.</h1>
+        <p class="hero-meta">Smart Event & Wedding Invitation Platform</p>
+        <p class="hero-description">Create and manage your events with ease. Perfect for weddings, anniversaries, birthdays, and all celebrations.</p>
+      </div>
+
+      <!-- RIGHT SIDE - Login Panels -->
+      <div class="hero-right">
+        <div class="login-tabs">
+          <button class="tab-btn active" data-tab="guest">Guest Login</button>
+          <button class="tab-btn" data-tab="admin">Admin Login</button>
+        </div>
+
+        <!-- Guest Login Form -->
+        <div class="tab-content active" id="guestTab">
+          <form id="guestLoginForm" class="login-form">
+            <h3>Guest Access</h3>
+            <div class="form-group">
+              <label for="guestName">Your Name *</label>
+              <input type="text" id="guestName" name="guestName" placeholder="Enter your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="eventSelection">Select Event (from Admin)</label>
+              <select id="eventSelection" name="eventSelection">
+                <option value="">Loading events…</option>
+              </select>
+              <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0.4rem;">Choose an event created by the administrator. Fields below will auto-fill.</p>
+            </div>
+            <div class="form-group">
+              <label for="eventType">Event Type *</label>
+              <select id="eventType" name="eventType" required>
+                <option value="">Select event type</option>
+                <option value="wedding">Wedding</option>
+                <option value="anniversary">Anniversary</option>
+                <option value="birthday">Birthday</option>
+                <option value="engagement">Engagement</option>
+                <option value="corporate">Corporate Event</option>
+                <option value="other">Other Celebration</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="eventName">Event Name *</label>
+              <input type="text" id="eventName" name="eventName" placeholder="e.g., John & Sarah's Wedding" required />
+            </div>
+            <div class="form-group">
+              <label for="eventDate">Event Date *</label>
+              <input type="date" id="eventDate" name="eventDate" required />
+            </div>
+            <div class="form-group">
+              <label for="eventTime">Event Time *</label>
+              <input type="time" id="eventTime" name="eventTime" required />
+            </div>
+            <div class="form-group">
+              <label for="eventLocation">Event Location *</label>
+              <input type="text" id="eventLocation" name="eventLocation" placeholder="e.g., Grand Ballroom, Downtown" required />
+            </div>
+            <button type="submit" class="btn primary full-width">Access Event</button>
+            <div id="guestStatus" class="form-status"></div>
+          </form>
+        </div>
+
+        <!-- Admin Login Form -->
+        <div class="tab-content" id="adminTab">
+          <form id="adminLoginForm" class="login-form">
+            <h3>Admin Access</h3>
+            <div class="form-group">
+              <label for="adminUsername">Username *</label>
+              <input type="text" id="adminUsername" name="adminUsername" placeholder="Enter admin username" required />
+            </div>
+            <div class="form-group">
+              <label for="adminPassword">Password *</label>
+              <input type="password" id="adminPassword" name="adminPassword" placeholder="Enter password" required />
+            </div>
+            <button type="submit" class="btn primary full-width">Admin Login</button>
+            <div id="adminStatus" class="form-status"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= FEATURES SECTION ============= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Choose InviteSphere?</h2>
+        <p>The complete event management solution for modern celebrations</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>Easy RSVP</h3>
+          <p>Simple, elegant invitation system for your guests</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Smart Dashboard</h3>
+          <p>Real-time analytics and guest management</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Guest Tracking</h3>
+          <p>Keep track of attendance and dietary preferences</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Secure & Private</h3>
+          <p>Your guest data is safe and protected</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= CTA SECTION ============= -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Ready to RSVP?</h2>
+        <p>Join us for an unforgettable celebration. Confirm your attendance now!</p>
+        <a href="rsvp.html" class="btn primary large">Go to RSVP Page</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 InviteSphere. Your celebration, beautifully organized.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/navigation.js"></script>
+  <script type="module" src="js/home-login.js"></script>
+</body>
+</html>

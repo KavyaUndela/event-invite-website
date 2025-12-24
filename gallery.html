@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gallery – InviteSphere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ============= NAVBAR ============= -->
+  <header class="site-header">
+    <nav class="navbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">☰</button>
+      <div class="brand-mark">
+        <span class="brand-icon">★</span>
+        <span class="brand-name">InviteSphere</span>
+      </div>
+      <div style="width: 40px;"></div>
+    </nav>
+  </header>
+
+  <!-- ============= SIDEBAR NAVIGATION ============= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">×</button>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item" title="Home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="details.html" class="nav-item" title="Event Details">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Details</span>
+        </a>
+        <a href="venue.html" class="nav-item" title="Venue & Location">
+          <span class="nav-icon">📍</span>
+          <span class="nav-label">Venue</span>
+        </a>
+        <a href="rsvp.html" class="nav-item" title="RSVP">
+          <span class="nav-icon">✓</span>
+          <span class="nav-label">RSVP</span>
+        </a>
+        <a href="gallery.html" class="nav-item active" title="Gallery">
+          <span class="nav-icon">🖼</span>
+          <span class="nav-label">Gallery</span>
+        </a>
+      </nav>
+
+      <!-- ============= COUNTDOWN TIMER ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Event Countdown</h4>
+        <div class="countdown-grid" id="countdownTimer">
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Mins</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Secs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= VENUE CARD ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Venue Location</h4>
+        <div class="venue-card">
+          <div class="venue-icon">📍</div>
+          <p class="venue-name">Grand Ballroom</p>
+          <p class="venue-address">123 Celebration Street</p>
+          <p class="venue-city">Downtown City, State</p>
+          <a href="venue.html" class="venue-link">View Map →</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============= PAGE CONTENT ============= -->
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <h1>Gallery</h1>
+        <p class="subtitle">A glimpse into the magic of our celebration</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <div class="gallery-placeholder">🎉</div>
+            <p class="gallery-caption">Celebration 1</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">✨</div>
+            <p class="gallery-caption">Celebration 2</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">🎊</div>
+            <p class="gallery-caption">Celebration 3</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">🎈</div>
+            <p class="gallery-caption">Celebration 4</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">💫</div>
+            <p class="gallery-caption">Celebration 5</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">🌟</div>
+            <p class="gallery-caption">Celebration 6</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="gallery-info">
+          <h2>Share Your Moments</h2>
+          <p>Help us capture the magic! Share your photos and videos with us by tagging <strong>#InviteSphereCelebration</strong> on social media.</p>
+          <p>The best moments will be featured in our official gallery!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="section">
+      <div class="container">
+        <div class="nav-links-section">
+          <a href="details.html" class="btn subtle">Event Details</a>
+          <a href="rsvp.html" class="btn primary">Confirm Attendance</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 InviteSphere. Your celebration, beautifully organized.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/navigation.js"></script>
+</body>
+</html>

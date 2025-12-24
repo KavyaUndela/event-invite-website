@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RSVP – InviteSphere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ============= NAVBAR ============= -->
+  <header class="site-header">
+    <nav class="navbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">☰</button>
+      <div class="brand-mark">
+        <span class="brand-icon">★</span>
+        <span class="brand-name">InviteSphere</span>
+      </div>
+      <div style="width: 40px;"></div>
+    </nav>
+  </header>
+
+  <!-- ============= SIDEBAR NAVIGATION ============= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">×</button>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item" title="Home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="details.html" class="nav-item" title="Event Details">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Details</span>
+        </a>
+        <a href="venue.html" class="nav-item" title="Venue & Location">
+          <span class="nav-icon">📍</span>
+          <span class="nav-label">Venue</span>
+        </a>
+        <a href="rsvp.html" class="nav-item active" title="RSVP">
+          <span class="nav-icon">✓</span>
+          <span class="nav-label">RSVP</span>
+        </a>
+        <a href="gallery.html" class="nav-item" title="Gallery">
+          <span class="nav-icon">🖼</span>
+          <span class="nav-label">Gallery</span>
+        </a>
+      </nav>
+
+      <!-- ============= COUNTDOWN TIMER ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Event Countdown</h4>
+        <div class="countdown-grid" id="countdownTimer">
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Mins</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Secs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= VENUE CARD ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Venue Location</h4>
+        <div class="venue-card">
+          <div class="venue-icon">📍</div>
+          <p class="venue-name">Grand Ballroom</p>
+          <p class="venue-address">123 Celebration Street</p>
+          <p class="venue-city">Downtown City, State</p>
+          <a href="venue.html" class="venue-link">View Map →</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============= PAGE CONTENT ============= -->
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <h1>Confirm Your Attendance</h1>
+        <p class="subtitle">We'd love to have you celebrate with us!</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="rsvp-form-wrapper">
+          <div class="rsvp-form-card">
+            <form id="rsvpForm" class="rsvp-form">
+              <!-- Name -->
+              <div class="form-group">
+                <label for="name">Your Full Name *</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+
+              <!-- Number of Guests -->
+              <div class="form-group">
+                <label for="guests">Number of Guests (including yourself) *</label>
+                <input
+                  type="number"
+                  id="guests"
+                  name="guests"
+                  min="1"
+                  max="5"
+                  placeholder="1"
+                  value="1"
+                  required
+                />
+              </div>
+
+              <!-- Attendance -->
+              <div class="form-group">
+                <label>Will you be attending? *</label>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input type="radio" name="attend" value="yes" required />
+                    <span>Yes, I'll be there! ✓</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="attend" value="no" />
+                    <span>Unfortunately, I cannot attend ✗</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Message -->
+              <div class="form-group">
+                <label for="message">Special Message (optional)</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Leave a message or dietary restrictions..."
+                  rows="4"
+                ></textarea>
+              </div>
+
+              <!-- Submit -->
+              <div class="form-actions">
+                <button type="submit" class="btn primary full-width">Submit RSVP</button>
+              </div>
+
+              <!-- Status Messages -->
+              <div id="formStatus" class="form-status"></div>
+            </form>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="success-message" style="display: none;">
+              <div class="success-icon">✓</div>
+              <h3>RSVP Received!</h3>
+              <p>Thank you for confirming your attendance. We can't wait to celebrate with you!</p>
+              <a href="home.html" class="btn subtle">Back to Home</a>
+            </div>
+          </div>
+
+          <!-- Info Box -->
+          <div class="rsvp-info">
+            <h3>RSVP Deadline</h3>
+            <p><strong>February 1, 2026</strong></p>
+            <p>Please confirm your attendance by this date so we can finalize our plans.</p>
+            <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid rgba(0,0,0,0.1);">
+            <h3>Have Questions?</h3>
+            <p>Email us at <strong>info@invitesphere.com</strong></p>
+            <p>or call <strong>(555) 123-4567</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 InviteSphere. Your celebration, beautifully organized.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/navigation.js"></script>
+  <script type="module" src="js/rsvp-page.js"></script>
+</body>
+</html>
