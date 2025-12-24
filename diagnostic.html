@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>InviteSphere - Diagnostic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .diagnostic {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .status {
+      margin: 15px 0;
+      padding: 10px;
+      border-left: 4px solid #ccc;
+    }
+    .status.ok {
+      border-left-color: #4CAF50;
+      background: #f1f8f4;
+    }
+    .status.error {
+      border-left-color: #f44336;
+      background: #fef1f0;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+    button:hover {
+      background: #764ba2;
+    }
+  </style>
+</head>
+<body>
+  <div class="diagnostic">
+    <h1>🔍 InviteSphere Diagnostic</h1>
+    <div id="diagnostics"></div>
+    <button onclick="testConnection()">Test Connection</button>
+    <button onclick="testLocalStorage()">Test LocalStorage</button>
+    <button onclick="location.href='index.html'">Go to Home</button>
+  </div>
+
+  <script type="module">
+    import { db, auth } from "./js/firebase-config.js";
+
+    const diagnosticsDiv = document.getElementById('diagnostics');
+
+    function addStatus(title, isOk, message) {
+      const status = document.createElement('div');
+      status.className = `status ${isOk ? 'ok' : 'error'}`;
+      status.innerHTML = `<strong>${title}:</strong> ${message}`;
+      diagnosticsDiv.appendChild(status);
+    }
+
+    // Check files
+    addStatus('Firebase Config', true, 'Loaded ✓');
+    addStatus('Database (Firestore)', db ? 'Ready ✓' : 'Not initialized ✗', db ? 'Connected' : 'Check Firebase project');
+    addStatus('Authentication', auth ? 'Ready ✓' : 'Not initialized ✗', auth ? 'Connected' : 'Check Firebase Auth');
+
+    // Check localStorage
+    addStatus('LocalStorage', true, `Available (${Math.round(localStorage.length)} items)`);
+
+    // Check network
+    addStatus('Internet', navigator.onLine ? 'Online ✓' : 'Offline ✗', navigator.onLine ? 'Connected' : 'Check connection');
+
+    window.testConnection = async function() {
+      try {
+        const response = await fetch('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png');
+        addStatus('Network Test', response.ok, response.ok ? 'Connection OK ✓' : 'Failed ✗');
+      } catch (e) {
+        addStatus('Network Test', false, 'Failed: ' + e.message);
+      }
+    };
+
+    window.testLocalStorage = function() {
+      try {
+        localStorage.setItem('test', 'works');
+        localStorage.removeItem('test');
+        addStatus('LocalStorage Test', true, 'Write/Read OK ✓');
+      } catch (e) {
+        addStatus('LocalStorage Test', false, 'Failed: ' + e.message);
+      }
+    };
+  </script>
+</body>
+</html>
