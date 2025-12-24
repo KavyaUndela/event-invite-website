@@ -13,48 +13,64 @@ if (db) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('🔧 RSVP page script loaded - v2');
+  console.log('🔧 RSVP page script loaded - v3');
+  
+  let clickCounter = 0;
   
   // Update debug timestamp
   const loadTimeEl = document.getElementById('loadTime');
   if (loadTimeEl) {
     loadTimeEl.textContent = new Date().toLocaleTimeString();
+  } else {
+    console.warn('loadTime element not found');
   }
   
   const rsvpForm = document.getElementById('rsvpForm');
   const successMessage = document.getElementById('successMessage');
   const formStatus = document.getElementById('formStatus');
+  const submitBtn = document.getElementById('submitBtn');
+  const clickCountEl = document.getElementById('clickCount');
 
   console.log('Form elements found:', {
     rsvpForm: !!rsvpForm,
     successMessage: !!successMessage,
-    formStatus: !!formStatus
+    formStatus: !!formStatus,
+    submitBtn: !!submitBtn,
+    clickCountEl: !!clickCountEl
   });
 
   if (!rsvpForm) {
     console.error('❌ RSVP form not found on page!');
+    alert('ERROR: Form not found! Check console.');
     return;
   }
 
   console.log('✓ Form found, attaching listeners');
   
-  // Add submit handler
-  rsvpForm.addEventListener('submit', handleSubmit);
-  
-  // Also add click handler to button as backup
-  const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+  // Add direct click handler to button with highest priority
   if (submitBtn) {
-    console.log('✓ Submit button found');
-    submitBtn.addEventListener('click', function(e) {
-      console.log('🖱️ Button clicked directly');
-    });
+    console.log('✓ Submit button found, adding click handler');
+    submitBtn.onclick = function(e) {
+      clickCounter++;
+      console.log('🖱️ BUTTON CLICKED! Count:', clickCounter);
+      if (clickCountEl) {
+        clickCountEl.textContent = clickCounter;
+        clickCountEl.style.color = 'green';
+        clickCountEl.style.fontWeight = 'bold';
+      }
+      // Don't prevent default here, let form submit naturally
+    };
   } else {
     console.error('❌ Submit button not found!');
+    alert('ERROR: Submit button not found!');
   }
+  
+  // Add submit handler to form
+  rsvpForm.onsubmit = handleSubmit;
   
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log('🚀 Form submitted!');
+    console.log('🚀 FORM SUBMIT EVENT FIRED!');
 
     const name = document.getElementById('name').value.trim();
     const guests = document.getElementById('guests').value;
@@ -65,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
       name,
       guests,
       attendRadio: !!attendRadio,
+      attendValue: attendRadio ? attendRadio.value : 'NONE',
       message
     });
 
