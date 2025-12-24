@@ -23,23 +23,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const name = document.getElementById('name').value.trim();
       const guests = document.getElementById('guests').value;
-      const attend = document.querySelector('input[name="attend"]:checked').value;
+      const attendRadio = document.querySelector('input[name="attend"]:checked');
       const message = document.getElementById('message').value.trim();
 
-      // Validate
+      // Validate name
       if (!name) {
         showError('Please enter your name');
         return;
       }
 
+      // Validate attendance selection
+      if (!attendRadio) {
+        showError('Please select whether you can attend');
+        return;
+      }
+
+      const attend = attendRadio.value;
+
       // Prepare data (attach event info if present)
       const guestData = JSON.parse(sessionStorage.getItem('guestData') || '{}');
       const rsvpData = {
         name: name,
-        guests: parseInt(guests),
+        guests: parseInt(guests) || 1,
         attend: attend === 'yes',
         message: message,
-        eventName: guestData.eventName || '',
+        eventName: guestData.eventName || 'Default Event',
         eventType: guestData.eventType || '',
         eventDate: guestData.eventDate || '',
         eventTime: guestData.eventTime || '',
@@ -48,10 +56,17 @@ document.addEventListener('DOMContentLoaded', function() {
       };
 
       try {
+        let savedToFirestore = false;
         if (firebaseReady && db) {
-          // Save to Firestore
-          await addDoc(collection(db, 'rsvps'), rsvpData);
-          console.log('RSVP saved to Firestore successfully');
+          try {
+            // Save to Firestore
+            await addDoc(collection(db, 'rsvps'), rsvpData);
+            console.log('✓ RSVP saved to Firestore successfully');
+            savedToFirestore = true;
+          } catch (firestoreError) {
+            console.error('✗ Firestore save failed:', firestoreError);
+            console.log('Falling back to localStorage only');
+          }
         } else {
           console.warn('Firebase not ready, using localStorage only');
         }
@@ -60,12 +75,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const local = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');
         local.push(rsvpData);
         localStorage.setItem('rsvpsLocal', JSON.stringify(local));
+        console.log('✓ RSVP saved to localStorage');
         
         // Hide form, show success
         rsvpForm.style.display = 'none';
         successMessage.style.display = 'block';
+        
+        // Log confirmation
+        console.log('✓ RSVP submitted successfully!', rsvpData);
       } catch (error) {
-        console.error('Error saving RSVP:', error);
+        console.error('✗ Error in RSVP submission:', error);
         
         // Fallback to local storage only
         const local = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');

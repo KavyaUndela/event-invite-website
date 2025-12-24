@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RSVP Troubleshooting - InviteSphere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    
+    h1 {
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+    
+    .checklist {
+      background: #f9f9f9;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    
+    .checklist h3 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .checklist-item {
+      display: flex;
+      align-items: start;
+      margin: 12px 0;
+      font-size: 15px;
+    }
+    
+    .checklist-item input[type="checkbox"] {
+      margin-right: 12px;
+      margin-top: 4px;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+    
+    .code {
+      background: #f4f4f4;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    
+    .button {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin: 10px 10px 10px 0;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    
+    .button:hover {
+      background: #764ba2;
+    }
+    
+    .button.secondary {
+      background: #6c757d;
+    }
+    
+    .button.secondary:hover {
+      background: #5a6268;
+    }
+    
+    .status {
+      padding: 15px;
+      border-radius: 6px;
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .status.warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+    
+    .step {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 6px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .step h3 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    .step-number {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 RSVP Troubleshooting Guide</h1>
+    <p class="subtitle">Fix RSVP submission issues step by step</p>
+    
+    <!-- Firebase Setup Check -->
+    <div class="checklist">
+      <h3>📋 Prerequisites Checklist</h3>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="check1">
+        <label for="check1"><strong>Firebase project created</strong> - Visit <a href="https://console.firebase.google.com" target="_blank">Firebase Console</a></label>
+      </div>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="check2">
+        <label for="check2"><strong>Firestore Database created</strong> - Set to production mode</label>
+      </div>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="check3">
+        <label for="check3"><strong>Firestore Rules updated</strong> - Allow read/write on /rsvps collection</label>
+      </div>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="check4">
+        <label for="check4"><strong>Authentication enabled</strong> - Email/Password or Google Sign-In</label>
+      </div>
+    </div>
+
+    <!-- Step-by-step instructions -->
+    <h2 style="color: #333; margin: 30px 0 20px 0;">Step-by-Step Setup</h2>
+    
+    <div class="step">
+      <h3><span class="step-number">1</span> Go to Firebase Console</h3>
+      <p>Open <a href="https://console.firebase.google.com/project/invitesphere-f32fe" target="_blank">Firebase Console</a> and log in with your Google account.</p>
+    </div>
+
+    <div class="step">
+      <h3><span class="step-number">2</span> Create Firestore Database</h3>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Click <strong>Firestore Database</strong> from left menu</li>
+        <li>Click <strong>Create Database</strong></li>
+        <li>Choose <strong>Production mode</strong></li>
+        <li>Select your region</li>
+        <li>Click <strong>Create</strong></li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <h3><span class="step-number">3</span> Update Firestore Security Rules</h3>
+      <p>Go to <strong>Firestore Database → Rules</strong> tab and paste:</p>
+      <div class="code">
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /rsvps/{document=**} {
+      allow read, write: if true;
+    }
+    match /events/{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+      </div>
+      <p style="margin-top: 10px;">Click <strong>Publish</strong></p>
+    </div>
+
+    <div class="step">
+      <h3><span class="step-number">4</span> Enable Authentication</h3>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Click <strong>Authentication</strong> from left menu</li>
+        <li>Click <strong>Get Started</strong></li>
+        <li>Enable <strong>Email/Password</strong></li>
+        <li>Enable <strong>Google Sign-In</strong></li>
+      </ul>
+    </div>
+
+    <!-- Testing -->
+    <h2 style="color: #333; margin: 30px 0 20px 0;">Test Your RSVP Form</h2>
+    
+    <div class="checklist">
+      <h3>🧪 Testing Steps</h3>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="test1">
+        <label for="test1">Open <a href="https://kavyaundela.github.io/event-invite-website/diagnostic.html" target="_blank">Diagnostic Page</a> and verify all statuses are green</label>
+      </div>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="test2">
+        <label for="test2">Go to <a href="https://kavyaundela.github.io/event-invite-website/rsvp.html" target="_blank">RSVP Page</a></label>
+      </div>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="test3">
+        <label for="test3">Fill in the form:
+          <ul style="margin-top: 5px;">
+            <li>Name: Your test name</li>
+            <li>Guests: 1</li>
+            <li>Attendance: Select "Yes"</li>
+            <li>Message: (optional)</li>
+          </ul>
+        </label>
+      </div>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="test4">
+        <label for="test4">Click <strong>Submit RSVP</strong></label>
+      </div>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="test5">
+        <label for="test5">You should see "RSVP Received!" message</label>
+      </div>
+    </div>
+
+    <!-- Troubleshooting -->
+    <h2 style="color: #333; margin: 30px 0 20px 0;">Troubleshooting</h2>
+    
+    <div class="status error">
+      <strong>❌ "RSVP failed to save"</strong>
+    </div>
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+      <p><strong>Solution:</strong></p>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Check Firestore Rules are published correctly</li>
+        <li>Verify /rsvps collection exists in Firestore</li>
+        <li>Open browser DevTools (F12) → Console tab for error messages</li>
+        <li>Check that Firestore Database is in <strong>production mode</strong></li>
+      </ul>
+    </div>
+
+    <div class="status warning">
+      <strong>⚠️ "Form won't submit" or "Button doesn't respond"</strong>
+    </div>
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+      <p><strong>Solution:</strong></p>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Make sure you selected an attendance option (Yes/No)</li>
+        <li>Make sure name field is not empty</li>
+        <li>Hard refresh the page (Ctrl+Shift+R)</li>
+        <li>Clear browser cache and cookies</li>
+        <li>Try in Incognito/Private mode</li>
+      </ul>
+    </div>
+
+    <div class="status success">
+      <strong>✅ "RSVP Received!" message appears</strong>
+    </div>
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+      <p><strong>Great! Your RSVP form is working!</strong></p>
+      <p style="margin-top: 10px;">Your RSVPs are being saved to:</p>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>✓ Firestore Database (cloud)</li>
+        <li>✓ Browser LocalStorage (backup)</li>
+      </ul>
+    </div>
+
+    <!-- Quick Links -->
+    <h2 style="color: #333; margin: 30px 0 20px 0;">Quick Links</h2>
+    <div style="margin: 20px 0;">
+      <a href="https://console.firebase.google.com/project/invitesphere-f32fe" class="button">Firebase Console</a>
+      <a href="https://kavyaundela.github.io/event-invite-website/" class="button secondary">Visit Site</a>
+      <a href="https://kavyaundela.github.io/event-invite-website/rsvp.html" class="button secondary">RSVP Form</a>
+      <a href="https://kavyaundela.github.io/event-invite-website/diagnostic.html" class="button secondary">Diagnostic</a>
+    </div>
+
+    <!-- Help -->
+    <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 20px; border-radius: 4px; margin-top: 30px;">
+      <h3 style="color: #1976D2; margin-bottom: 10px;">💡 Need More Help?</h3>
+      <p>Check the browser console for specific error messages (F12 → Console tab)</p>
+      <p style="margin-top: 10px;">Visit the <a href="https://firebase.google.com/docs/firestore" target="_blank">Firestore Documentation</a> for more details</p>
+    </div>
+  </div>
+</body>
+</html>
