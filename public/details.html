@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Event Details – InviteSphere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ============= NAVBAR ============= -->
+  <header class="site-header">
+    <nav class="navbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">☰</button>
+      <div class="brand-mark">
+        <span class="brand-icon">★</span>
+        <span class="brand-name">InviteSphere</span>
+      </div>
+      <div style="width: 40px;"></div>
+    </nav>
+  </header>
+
+  <!-- ============= SIDEBAR NAVIGATION ============= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">×</button>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item" title="Home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="details.html" class="nav-item active" title="Event Details">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Details</span>
+        </a>
+        <a href="venue.html" class="nav-item" title="Venue & Location">
+          <span class="nav-icon">📍</span>
+          <span class="nav-label">Venue</span>
+        </a>
+        <a href="rsvp.html" class="nav-item" title="RSVP">
+          <span class="nav-icon">✓</span>
+          <span class="nav-label">RSVP</span>
+        </a>
+        <a href="gallery.html" class="nav-item" title="Gallery">
+          <span class="nav-icon">🖼</span>
+          <span class="nav-label">Gallery</span>
+        </a>
+      </nav>
+
+      <!-- ============= COUNTDOWN TIMER ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Event Countdown</h4>
+        <div class="countdown-grid" id="countdownTimer">
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Mins</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Secs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= VENUE CARD ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Venue Location</h4>
+        <div class="venue-card">
+          <div class="venue-icon">📍</div>
+          <p class="venue-name">Grand Ballroom</p>
+          <p class="venue-address">123 Celebration Street</p>
+          <p class="venue-city">Downtown City, State</p>
+          <a href="venue.html" class="venue-link">View Map →</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============= PAGE CONTENT ============= -->
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <h1 id="eventNameDisplay">Event Details</h1>
+        <p class="subtitle" id="guestWelcome">Welcome! Here are your event details</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="details-grid">
+          <!-- Event Name -->
+          <div class="detail-card">
+            <div class="detail-icon">🎉</div>
+            <h3>Event Name</h3>
+            <div class="detail-content">
+              <p id="displayEventName"><strong>Loading...</strong></p>
+            </div>
+          </div>
+
+          <!-- Event Type -->
+          <div class="detail-card">
+            <div class="detail-icon">🎊</div>
+            <h3>Event Type</h3>
+            <div class="detail-content">
+              <p id="displayEventType"><strong>Loading...</strong></p>
+            </div>
+          </div>
+
+          <!-- Date & Time -->
+          <div class="detail-card">
+            <div class="detail-icon">📅</div>
+            <h3>Date & Time</h3>
+            <div class="detail-content">
+              <p id="displayEventDate"><strong>Loading...</strong></p>
+              <p id="displayEventTime">Loading...</p>
+            </div>
+          </div>
+
+          <!-- Venue -->
+          <div class="detail-card">
+            <div class="detail-icon">📍</div>
+            <h3>Venue Location</h3>
+            <div class="detail-content">
+              <p id="displayEventLocation"><strong>Loading...</strong></p>
+            </div>
+          </div>
+
+          <!-- Map Preview -->
+          <div class="map-card" aria-label="Event Location Map">
+            <div class="map-frame">
+              <iframe id="detailsMapFrame" width="100%" height="280" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Countdown Timer Section -->
+        <div class="countdown-section">
+          <h2>Time Until Event</h2>
+          <div class="countdown-display" id="mainCountdown">
+            <div class="countdown-box-large">
+              <div class="countdown-value-large">--</div>
+              <div class="countdown-label-large">Days</div>
+            </div>
+            <div class="countdown-box-large">
+              <div class="countdown-value-large">--</div>
+              <div class="countdown-label-large">Hours</div>
+            </div>
+            <div class="countdown-box-large">
+              <div class="countdown-value-large">--</div>
+              <div class="countdown-label-large">Minutes</div>
+            </div>
+            <div class="countdown-box-large">
+              <div class="countdown-value-large">--</div>
+              <div class="countdown-label-large">Seconds</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Info -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="info-box">
+          <h2>Important Information</h2>
+          <ul class="info-list">
+            <li>✓ Doors open at 5:45 PM for cocktail hour</li>
+            <li>✓ Dinner service begins at 7:00 PM</li>
+            <li>✓ Dietary restrictions accommodated upon request</li>
+            <li>✓ Plus-ones welcome with notification</li>
+            <li>✓ Please RSVP by February 1, 2026</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="section">
+      <div class="container">
+        <div class="nav-links-section">
+          <a href="venue.html" class="btn primary">View Venue Details</a>
+          <a href="rsvp.html" class="btn subtle">Go to RSVP</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 InviteSphere. Your celebration, beautifully organized.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/navigation.js"></script>
+  <script src="js/event-display.js"></script>
+</body>
+</html>

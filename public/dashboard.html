@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard – InviteSphere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+    }
+
+    .dashboard-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    .dashboard-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      padding: 2.5rem 2.5rem;
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .dashboard-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .dashboard-header h1::before {
+      content: '🎯';
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .dashboard-header p {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      margin-bottom: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-content {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .header-actions button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-refresh {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-refresh:hover {
+      background: rgba(255, 255, 255, 0.35);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-logout {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-logout:hover {
+      background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(214, 143, 9, 0.45);
+    }
+
+    /* Main Content */
+    .dashboard-content {
+      flex: 1;
+      padding: 2.5rem 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Stats Section */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      border: 2px solid rgba(102, 126, 234, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .stat-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .stat-card h3 {
+      color: #666;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .stat-card:nth-child(1) h3::before {
+      content: '📊';
+      font-size: 1.2rem;
+    }
+
+    .stat-card:nth-child(2) h3::before {
+      content: '✅';
+      font-size: 1.2rem;
+    }
+
+    .stat-card:nth-child(3) h3::before {
+      content: '❌';
+      font-size: 1.2rem;
+    }
+
+    .stat-card:nth-child(4) h3::before {
+      content: '👥';
+      font-size: 1.2rem;
+    }
+
+    .stat-card .number {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: countUp 0.5s ease-out;
+    }
+
+    @keyframes countUp {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Form Styling */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #495057;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #f8f9fa;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      background: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .form-group input:hover,
+    .form-group select:hover {
+      border-color: #667eea;
+      background: #ffffff;
+    }
+
+    .btn {
+      padding: 0.9rem 2rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn.subtle {
+      background: #f8f9fa;
+      color: #495057;
+      border: 2px solid #e9ecef;
+    }
+
+    .btn.subtle:hover {
+      background: #e9ecef;
+      border-color: #dee2e6;
+      transform: translateY(-2px);
+    }
+
+    .btn.danger {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+    }
+
+    .btn.danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    }
+
+    .btn.success {
+      background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+    }
+
+    .btn.success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+    }
+
+    /* RSVPs Table Section */
+    .rsvps-section {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      padding: 2.5rem;
+      border: 2px solid rgba(102, 126, 234, 0.08);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rsvps-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(50%, -50%);
+    }
+
+    .rsvps-section:hover {
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      border-color: rgba(102, 126, 234, 0.15);
+    }
+
+    .rsvps-section h2 {
+      font-size: 1.75rem;
+      margin-bottom: 0.75rem;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rsvps-section h2::before {
+      content: '📊';
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+    }
+
+    .rsvps-section > p {
+      color: #555;
+      margin-bottom: 1.75rem;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(135deg, #f8f9ff 0%, #f3e5f5 100%);
+      border-left: 5px solid #667eea;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+      position: relative;
+      z-index: 1;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+
+    table thead {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+    }
+
+    table th {
+      padding: 1.25rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #ffffff;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    table td {
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid #e9ecef;
+      color: #495057;
+      font-size: 0.95rem;
+    }
+
+    table tr:hover {
+      background: linear-gradient(90deg, #f8f9ff 0%, #ffffff 100%);
+      transition: all 0.2s;
+      transform: scale(1.01);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 90px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .badge-yes {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      color: #2e7d32;
+      border: 2px solid #81c784;
+    }
+
+    .badge-yes:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+    }
+
+    .badge-no {
+      background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+      color: #c62828;
+      border: 2px solid #ef9a9a;
+    }
+
+    .badge-no:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(198, 40, 40, 0.2);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #999;
+    }
+
+    .empty-state p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: #666;
+    }
+
+    .empty-state::before {
+      content: '📭';
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: sway 3s ease-in-out infinite;
+    }
+
+    @keyframes sway {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #999;
+    }
+
+    .loading::after {
+      content: ".";
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0%, 20% { content: "."; }
+      40% { content: ".."; }
+      60% { content: "..."; }
+      80%, 100% { content: ""; }
+    }
+
+    .error-message {
+      background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+      color: #c62828;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border-left: 5px solid #c62828;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(198, 40, 40, 0.15);
+      font-weight: 500;
+    }
+
+    .form-status {
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-status.success {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      color: #2e7d32;
+      border-left: 5px solid #4caf50;
+    }
+
+    .form-status.error {
+      background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+      color: #c62828;
+      border-left: 5px solid #f44336;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-header {
+        padding: 1.5rem 1rem;
+      }
+
+      .dashboard-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .dashboard-header h1::before {
+        font-size: 1.5rem;
+      }
+
+      .dashboard-content {
+        padding: 1.5rem 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .stat-card {
+        padding: 1.5rem;
+      }
+
+      .stat-card .number {
+        font-size: 2.5rem;
+      }
+
+      .header-actions {
+        flex-direction: column;
+      }
+
+      .header-actions button {
+        width: 100%;
+      }
+
+      .rsvps-section {
+        padding: 1.5rem;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      table th, table td {
+        padding: 0.7rem 0.5rem;
+      }
+
+      .badge {
+        min-width: 70px;
+        padding: 0.4rem 0.7rem;
+        font-size: 0.8rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #764ba2 0%, #667eea 100%);
+    }
+  </style>
+</head>
+<body>
+  <!-- ============= NAVBAR ============= -->
+  <header class="site-header">
+    <nav class="navbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">☰</button>
+      <div class="brand-mark">
+        <span class="brand-icon">★</span>
+        <span class="brand-name">InviteSphere</span>
+      </div>
+      <div style="width: 40px;"></div>
+    </nav>
+  </header>
+
+  <!-- ============= SIDEBAR NAVIGATION ============= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">×</button>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item" title="Home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="details.html" class="nav-item" title="Event Details">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Details</span>
+        </a>
+        <a href="venue.html" class="nav-item" title="Venue & Location">
+          <span class="nav-icon">📍</span>
+          <span class="nav-label">Venue</span>
+        </a>
+        <a href="rsvp.html" class="nav-item" title="RSVP">
+          <span class="nav-icon">✓</span>
+          <span class="nav-label">RSVP</span>
+        </a>
+        <a href="gallery.html" class="nav-item" title="Gallery">
+          <span class="nav-icon">🖼</span>
+          <span class="nav-label">Gallery</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <div class="dashboard-wrapper">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="header-content">
+        <h1>InviteSphere Admin Dashboard</h1>
+        <p>RSVP Management & Event Analytics</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn-refresh" id="refreshBtn">🔄 Refresh RSVPs</button>
+        <button class="btn-logout" id="logoutBtn">🚪 Logout</button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="dashboard-content">
+      <!-- Error Message -->
+      <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total RSVPs</h3>
+          <div class="number" id="totalCount">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Attending</h3>
+          <div class="number" id="attendingCount">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Not Attending</h3>
+          <div class="number" id="notAttendingCount">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Total Guests</h3>
+          <div class="number" id="totalGuests">0</div>
+        </div>
+      </div>
+
+      <!-- Event Setup -->
+      <div class="rsvps-section" style="margin-top: 2rem; background: linear-gradient(to bottom right, #ffffff, #f8f9ff);">
+        <h2 style="color: #667eea;">🎉 Event Setup (for Guests)</h2>
+        <p style="margin-bottom: 1.5rem; color: #555; background: linear-gradient(to right, #e8eaf6, #f3e5f5); border-left: 4px solid #667eea; padding: 1rem; border-radius: 8px;">
+          <strong>📋 Instructions:</strong> Create events that guests can select when logging in. Each event includes name, type, date, time, and location. Mark one event as <strong>"Active"</strong> to feature it on the guest portal. Guests will see countdown timers, venue maps, and can submit RSVPs for the selected event.
+        </p>
+        <form id="eventForm" class="rsvp-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          <div class="form-group">
+            <label for="eventNameAdmin">Event Name</label>
+            <input type="text" id="eventNameAdmin" placeholder="e.g., Alex & Sam Wedding" required />
+          </div>
+          <div class="form-group">
+            <label for="eventTypeAdmin">Event Type</label>
+            <select id="eventTypeAdmin" required>
+              <option value="Wedding">Wedding</option>
+              <option value="Birthday">Birthday</option>
+              <option value="Anniversary">Anniversary</option>
+              <option value="Corporate">Corporate Event</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="eventDateAdmin">Event Date</label>
+            <input type="date" id="eventDateAdmin" required />
+          </div>
+          <div class="form-group">
+            <label for="eventTimeAdmin">Event Time</label>
+            <input type="time" id="eventTimeAdmin" required />
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="eventLocationAdmin">Event Location</label>
+            <input type="text" id="eventLocationAdmin" placeholder="Venue or full address" required />
+          </div>
+          <div class="form-actions" style="grid-column: 1 / -1; display:flex; gap:0.75rem;">
+            <button type="submit" class="btn primary" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; padding: 0.9rem 2rem; font-size: 1rem; font-weight: 600; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);">💾 Save / Update Event</button>
+            <button type="button" class="btn subtle" id="resetEventForm" style="padding: 0.9rem 1.5rem;">🔄 Clear</button>
+          </div>
+          <div id="eventFormStatus" class="form-status" style="display:none; grid-column:1 / -1;"></div>
+        </form>
+
+        <div style="margin-top: 1.5rem;">
+          <h3 style="margin-bottom:0.75rem; color: #667eea; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 1.5rem;">📅</span> Event List
+          </h3>
+          <div id="eventList" class="table-wrapper" style="background: linear-gradient(135deg, #fafbff 0%, #f5f7fa 100%); border:2px solid #e5e7eb; border-radius:12px; padding:1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);"></div>
+        </div>
+      </div>
+
+      <!-- RSVPs Table -->
+      <div class="rsvps-section">
+        <h2>RSVP Submissions</h2>
+        <div id="loadingState" class="loading"></div>
+        <div id="emptyState" class="empty-state" style="display: none;">
+          <p>No RSVPs received yet.</p>
+        </div>
+        <div class="table-wrapper" id="tableWrapper" style="display: none;">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Guests</th>
+                <th>Attendance</th>
+                <th>Message</th>
+                <th>Submitted</th>
+              </tr>
+            </thead>
+            <tbody id="rsvpTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

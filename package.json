@@ -1,0 +1,28 @@
+{
+  "name": "invitesphere",
+  "version": "1.0.0",
+  "description": "InviteSphere - Smart Event & Wedding Invitation Platform with RSVP management and admin dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "invitesphere",
+    "event-management",
+    "wedding",
+    "invitation",
+    "rsvp",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.22.1",
+    "firebase-admin": "^12.7.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

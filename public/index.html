@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>InviteSphere – Smart Event Management Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ============= SIDEBAR NAVIGATION ============= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">×</button>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item active" title="Home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="details.html" class="nav-item" title="Event Details">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Details</span>
+        </a>
+        <a href="venue.html" class="nav-item" title="Venue & Location">
+          <span class="nav-icon">📍</span>
+          <span class="nav-label">Venue</span>
+        </a>
+        <a href="rsvp.html" class="nav-item" title="RSVP">
+          <span class="nav-icon">✓</span>
+          <span class="nav-label">RSVP</span>
+        </a>
+        <a href="gallery.html" class="nav-item" title="Gallery">
+          <span class="nav-icon">🖼</span>
+          <span class="nav-label">Gallery</span>
+        </a>
+      </nav>
+
+      <!-- ============= COUNTDOWN TIMER ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Event Countdown</h4>
+        <div class="countdown-grid" id="countdownTimer">
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Mins</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-value">--</div>
+            <div class="countdown-label">Secs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= VENUE CARD ============= -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-section-title">Venue Location</h4>
+        <div class="venue-card">
+          <div class="venue-icon">📍</div>
+          <p class="venue-name">Grand Ballroom</p>
+          <p class="venue-address">123 Celebration Street</p>
+          <p class="venue-city">Downtown City, State</p>
+          <a href="venue.html" class="venue-link">View Map →</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============= NAVBAR ============= -->
+  <header class="site-header">
+    <nav class="navbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">☰</button>
+      <div class="brand-mark">
+        <span class="brand-icon">★</span>
+        <span class="brand-name">InviteSphere</span>
+      </div>
+      <div class="nav-auth">
+        <button class="auth-btn" id="showLoginModal">Login</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ============= HERO / LANDING ============= -->
+  <section class="hero" id="top">
+    <div class="hero-overlay"></div>
+    <div class="hero-content-center">
+      <div class="hero-main">
+        <div class="hero-text-center">
+          <p class="hero-eyebrow">✨ Welcome to InviteSphere ✨</p>
+          <h1 class="hero-title-large">Create Unforgettable<br>Celebrations</h1>
+          <p class="hero-subtitle">The ultimate platform for modern event planning and elegant invitations</p>
+          <div class="hero-cta-buttons">
+            <button class="btn-hero-primary" id="getStartedBtn">Get Started</button>
+          </div>
+          <!-- feature pills removed per request -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= LOGIN MODAL ============= -->
+  <div class="modal" id="loginModal">
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">×</button>
+      <div class="modal-header">
+        <h2>Welcome Back</h2>
+        <p>Sign in to manage your events</p>
+      </div>
+      <div class="login-tabs">
+        <button class="tab-btn active" data-tab="admin">
+          <span class="tab-icon">🔐</span>
+          <span class="tab-label">Administrator</span>
+        </button>
+        <button class="tab-btn" data-tab="guest">
+          <span class="tab-icon">👤</span>
+          <span class="tab-label">Guest Access</span>
+        </button>
+      </div>
+
+      <!-- ADMIN LOGIN TAB -->
+      <div class="tab-content active" id="adminTab">
+        <div class="auth-toggle">
+          <button type="button" class="auth-mode-btn active" data-mode="signin">Sign In</button>
+          <button type="button" class="auth-mode-btn" data-mode="signup">Sign Up</button>
+        </div>
+        <form id="adminLoginForm" class="login-form" data-mode="signin">
+          <div class="form-group">
+            <label for="adminEmail">Admin Email</label>
+            <input type="email" id="adminEmail" placeholder="admin@example.com" autocomplete="username" required>
+          </div>
+          <div class="form-group">
+            <label for="adminPassword">Password</label>
+            <input type="password" id="adminPassword" placeholder="Enter password" autocomplete="current-password" required>
+          </div>
+          <div class="form-group" id="adminConfirmGroup" style="display: none;">
+            <label for="adminConfirmPassword">Confirm Password</label>
+            <input type="password" id="adminConfirmPassword" placeholder="Re-enter password" autocomplete="new-password">
+          </div>
+          <button type="submit" id="adminSubmit" class="btn btn-primary btn-full">Access Dashboard</button>
+          <div class="auth-divider">
+            <span>or continue with</span>
+          </div>
+          <button type="button" class="google-btn" id="adminGoogleBtn">
+            <span class="google-icon">G</span>
+            <span>Continue with Google</span>
+          </button>
+          <div id="adminStatus" class="form-status" style="display: none;"></div>
+        </form>
+        
+        <!-- Admin Event Management Preview -->
+        <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8eaf6 100%); border-radius: 12px; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+            <span style="font-size: 1.5rem;">📅</span>
+            <h4 style="margin: 0; color: #667eea; font-size: 1.15rem; font-weight: 600;">Your Events</h4>
+          </div>
+          <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #5f6368; line-height: 1.5;">
+            These are the events guests will see when they log in. Create and manage events in your dashboard after signing in.
+          </p>
+          <div id="adminEventsList" style="background: #ffffff; border-radius: 8px; padding: 1.25rem; min-height: 100px; border: 2px dashed #d1d5db; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="text-align: center; color: #9ca3af;">
+              <div style="font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.5;">🎉</div>
+              <p style="margin: 0; font-size: 0.95rem; font-weight: 500;">Loading events...</p>
+            </div>
+          </div>
+          <div style="margin-top: 1rem; padding: 0.75rem; background: linear-gradient(to right, #fef3c7, #fde68a); border-radius: 6px; border-left: 4px solid #f59e0b;">
+            <p style="margin: 0; font-size: 0.85rem; color: #78350f; line-height: 1.4;">
+              <strong>💡 Quick Tip:</strong> After logging in, go to your dashboard to create events. Set one as "Active" so guests can select it!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- GUEST LOGIN TAB -->
+      <div class="tab-content" id="guestTab">
+        <form id="guestLoginForm" class="login-form">
+          <div class="form-group">
+            <label for="guestName">Your Name</label>
+            <input type="text" id="guestName" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label for="eventSelection">Select Event</label>
+            <select id="eventSelection" required>
+              <option value="">Loading events...</option>
+            </select>
+            <small style="color:#666;">Admins add events in the dashboard. Pick the event you are attending.</small>
+          </div>
+          <div class="form-group">
+            <label for="eventType">Event Type</label>
+            <select id="eventType" required>
+              <option value="">Select event type</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Birthday">Birthday</option>
+              <option value="Anniversary">Anniversary</option>
+              <option value="Corporate">Corporate Event</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="eventName">Event Name</label>
+            <input type="text" id="eventName" placeholder="e.g., John & Jane's Wedding" required>
+          </div>
+          <div class="form-group">
+            <label for="eventDate">Event Date</label>
+            <input type="date" id="eventDate" required>
+          </div>
+          <div class="form-group">
+            <label for="eventTime">Event Time</label>
+            <input type="time" id="eventTime" required>
+          </div>
+          <div class="form-group">
+            <label for="eventLocation">Event Location</label>
+            <input type="text" id="eventLocation" placeholder="Enter venue location" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Access Event</button>
+          <div id="guestStatus" class="form-status" style="display: none;"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+    </div>
+  </section>
+
+  <!-- ============= FEATURES SECTION ============= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Comprehensive Event Solutions</h2>
+        <p>Professional tools designed to make your event planning seamless and efficient</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📅</div>
+          <h3>Strategic Planning</h3>
+          <p>Advanced scheduling and timeline management with real-time countdown displays and automated reminders</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✉️</div>
+          <h3>Digital Invitations</h3>
+          <p>Elegant, customizable invitations with instant delivery tracking and professional templates</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3>Guest Analytics</h3>
+          <p>Comprehensive guest management with attendance tracking and preferences</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Enterprise Security</h3>
+          <p>Bank-level encryption and data protection ensuring complete privacy for all guest information</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= CTA SECTION ============= -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Confirm Your Attendance</h2>
+        <p>Be part of this exceptional celebration. Submit your RSVP and help us plan the perfect experience for all our guests.</p>
+        <a href="rsvp.html" class="btn primary large">Submit RSVP</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="brand-icon">★</span>
+          <span class="brand-name">InviteSphere</span>
+        </div>
+        <p class="footer-tagline">Elevating celebrations through innovative event management</p>
+        <p class="footer-copyright">&copy; 2025 InviteSphere. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase Modular SDK (loaded via modules) -->
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/home-login.js"></script>
+  <script src="js/navigation.js"></script>
+</body>
+</html>
