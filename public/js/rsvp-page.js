@@ -2,6 +2,16 @@
 import { db } from './firebase-config.js';
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
+let firebaseReady = false;
+
+// Check if Firebase is initialized
+if (db) {
+  firebaseReady = true;
+  console.log('Firebase Firestore is ready');
+} else {
+  console.warn('Firebase Firestore is not initialized, will use localStorage only');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const rsvpForm = document.getElementById('rsvpForm');
   const successMessage = document.getElementById('successMessage');
@@ -38,11 +48,15 @@ document.addEventListener('DOMContentLoaded', function() {
       };
 
       try {
-        // Save to Firestore
-        await addDoc(collection(db, 'rsvps'), rsvpData);
-        console.log('RSVP saved to Firestore successfully');
+        if (firebaseReady && db) {
+          // Save to Firestore
+          await addDoc(collection(db, 'rsvps'), rsvpData);
+          console.log('RSVP saved to Firestore successfully');
+        } else {
+          console.warn('Firebase not ready, using localStorage only');
+        }
         
-        // Also save to localStorage as backup
+        // Always save to localStorage as backup
         const local = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');
         local.push(rsvpData);
         localStorage.setItem('rsvpsLocal', JSON.stringify(local));
