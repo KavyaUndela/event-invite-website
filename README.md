@@ -2,189 +2,95 @@
 
 **Your celebration, beautifully organized.**
 
-InviteSphere is a modern, responsive event invitation platform featuring live countdown, Google Maps integration, RSVP submission, and an admin dashboard. Built with Node.js, Express, and MongoDB, it delivers a professional experience for guests and hosts.
+InviteSphere is a modern, responsive event invitation platform featuring live countdown, Google Maps integration, RSVP submission, and an admin dashboard. Built with **Firebase Firestore** for real-time data syncing, it's a fully static site that runs on GitHub Pages with no backend server required.
 
 ## ✨ Features
 
 ✨ **Guest-Facing Features**
 - Professional landing page with event details
-- RSVP registration form
+- RSVP registration form with real-time Firestore sync
 - Live countdown timer
-- Responsive design
+- Responsive design with beautiful animations
+- Guest event selection dropdown
+- Wedding celebration special styling
 
 🔐 **Admin Dashboard**
-- Secure login system
-- View all RSVPs in a sortable table
-- Real-time statistics (attendance, guest count)
-- Refresh and logout functionality
+- Secure Firebase Authentication (email/password, Google Sign-In)
+- Create and manage events
+- View all RSVPs in a sortable, real-time table
+- Real-time statistics (attendance count, guest count)
+- Logout functionality with session management
+
+🗺️ **Maps Integration**
+- Google Maps embedded on venue page
+- Location-aware event displays
 
 💾 **Database Integration**
-- **MongoDB** - Primary database (optional but recommended)
-- **JSON Fallback** - Works without MongoDB setup
+- **Firebase Firestore** - Cloud database with real-time sync
+- **localStorage** - Automatic fallback for offline support
 
 ## Tech Stack
 
-- **Backend**: Node.js + Express.js
-- **Storage**: JSON file (data/rsvps.json)
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Styling**: Modern CSS with variables and responsive design
+- **Backend**: Firebase (Authentication + Firestore)
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6 Modules)
+- **Hosting**: GitHub Pages (fully static)
+- **Styling**: Modern CSS with gradients, animations, responsive design
 
-## Installation
+## 🌐 Live Demo
 
-### 1. Clone/Navigate to Project
+**Visit**: [https://kavyaundela.github.io/event-invite-website/](https://kavyaundela.github.io/event-invite-website/)
+
+## Installation & Setup
+
+### 1. Clone the Repository
 
 ```bash
+git clone https://github.com/KavyaUndela/event-invite-website.git
 cd event-invite-website
 ```
 
-### 2. Install Dependencies
+### 2. Firebase Configuration
 
-```bash
-npm install
-```
+1. Go to [Firebase Console](https://console.firebase.google.com)
+2. Create a new project
+3. Enable **Authentication** (Email/Password + Google)
+4. Create **Firestore Database** (production mode)
+5. Update `public/js/firebase-config.js` with your credentials
+6. Set Firestore Rules to allow read/write on `/rsvps` collection
 
-### 3. Configure Environment (Optional)
+### 3. That's It!
 
-You can customize admin credentials by editing `server.js`:
+This is a **fully static site** - no server installation needed. Visit the live GitHub Pages site above or open `public/index.html` locally.
 
-```javascript
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "1234";
-```
+## Usage
 
-### 4. Start the Server
+### For Guests
+1. Click **"Get Started"**
+2. Select **"Guest Access"**
+3. Choose an event
+4. Submit RSVP → Saves to Firebase Firestore
 
-```bash
-npm start
-# or
-node server.js
-```
+### For Admins
+1. Click **"Get Started"** → **"Admin"** tab
+2. Sign in (Firebase email/password or Google)
+3. Create events and view RSVPs in real-time
 
-The server will start at `http://localhost:3000`
+## 🔒 Security
 
-## Data Storage
+- Firebase Web API key is safe (Firebase SDK designed for client-side use)
+- Service account keys NOT in repository
+- Firestore production rules implemented
+- All data encrypted in transit
 
-All RSVP data is stored in `data/rsvps.json`. This file is automatically created and updated when guests submit RSVPs.
+## 📱 Browser Support
 
-## API Endpoints
+✅ Chrome, Firefox, Safari, Edge (latest versions)
+✅ iOS Safari, Chrome Mobile
 
-### Public Endpoints
+## 📝 License
 
-- **POST** `/api/rsvp` - Submit RSVP
-  ```json
-  {
-    "name": "John Doe",
-    "guests": 2,
-    "attend": "Yes",
-    "message": "Looking forward to it!"
-  }
-  ```
+MIT License - Use freely for your events!
 
-- **POST** `/api/login` - Admin login
-  ```json
-  {
-    "username": "admin",
-    "password": "1234"
-  }
-  ```
+---
 
-### Admin Endpoints
-
-- **GET** `/api/rsvps` - Fetch all RSVPs
-  - Returns list of all RSVPs with stats
-
-### Utility Endpoints
-
-- **GET** `/api/health` - Server health check
-  - Shows server status and storage type
-
-## Project Structure
-
-```
-event-invite-website/
-├── public/
-│   ├── index.html          # Main landing page
-│   ├── dashboard.html      # Admin dashboard
-│   ├── css/
-│   │   └── style.css       # Styling
-│   └── js/
-│       ├── main.js         # Landing page logic
-│       └── dashboard.js    # Dashboard logic
-├── data/
-│   └── rsvps.json         # JSON storage
-├── server.js              # Express server
-├── package.json           # Dependencies
-└── BRAND_GUIDE.md         # Brand identity guide
-```
-
-## Credentials
-
-Default admin credentials (change in `server.js` for production):
-- **Username**: admin
-- **Password**: 1234
-
-## Testing
-
-1. **Visit landing page**: http://localhost:3000
-2. **Submit RSVP** with your details
-3. **Admin login** with credentials above
-4. **View dashboard** to see submitted RSVPs
-
-## Features in Detail
-
-### Landing Page
-- Professional navbar with event branding
-- Hero section with admin login panel on the side
-- Event details cards
-- Live countdown timer
-- RSVP submission form
-- Responsive design for all devices
-
-### Admin Dashboard
-- Secure login gateway
-- Real-time RSVP statistics
-- Sortable RSVP table
-- Quick view of guest details
-- Refresh data button
-- Logout functionality
-
-## Environment Variables
-
-No environment variables required. All configuration is in `server.js`:
-
-| Variable | Default | Location |
-|----------|---------|----------|
-| PORT | 3000 | server.js line 6 |
-| ADMIN_USERNAME | admin | server.js line 9 |
-| ADMIN_PASSWORD | 1234 | server.js line 10 |
-
-## Security Notes
-
-⚠️ **For Production:**
-- Change default admin credentials in `server.js`
-- Use HTTPS
-- Add rate limiting
-- Validate all inputs
-- Set up automated backups of `data/rsvps.json`
-
-## Troubleshooting
-
-### Port Already in Use
-```bash
-# Find and kill process on port 3000
-Get-Process | Where-Object {$_.Id -eq (Get-NetTCPConnection -LocalPort 3000).OwningProcess} | Stop-Process
-```
-
-### RSVP Form Not Submitting
-- Check browser console for errors
-- Verify server is running on port 3000
-- Ensure /api/rsvp endpoint is accessible
-- Check that `data/rsvps.json` file is writable
-
-## Support
-
-For issues or questions, check the code comments in `server.js` and review the API endpoint documentation above.
-
-## License
-
-MIT License
+**Built with ❤️ for celebrations**
