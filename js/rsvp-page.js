@@ -36,41 +36,54 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  if (rsvpForm) {
-    console.log('✓ Attaching submit handler to form');
-    
-    rsvpForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      console.log('🚀 Form submitted!');
+  console.log('✓ Form found, attaching listeners');
+  
+  // Add submit handler
+  rsvpForm.addEventListener('submit', handleSubmit);
+  
+  // Also add click handler to button as backup
+  const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+  if (submitBtn) {
+    console.log('✓ Submit button found');
+    submitBtn.addEventListener('click', function(e) {
+      console.log('🖱️ Button clicked directly');
+    });
+  } else {
+    console.error('❌ Submit button not found!');
+  }
+  
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log('🚀 Form submitted!');
 
-      const name = document.getElementById('name').value.trim();
-      const guests = document.getElementById('guests').value;
-      const attendRadio = document.querySelector('input[name="attend"]:checked');
-      const message = document.getElementById('message').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const guests = document.getElementById('guests').value;
+    const attendRadio = document.querySelector('input[name="attend"]:checked');
+    const message = document.getElementById('message').value.trim();
 
-      console.log('Form values:', {
-        name,
-        guests,
-        attendRadio: !!attendRadio,
-        message
-      });
+    console.log('Form values:', {
+      name,
+      guests,
+      attendRadio: !!attendRadio,
+      message
+    });
 
-      // Validate name
-      if (!name) {
-        console.log('❌ Name validation failed');
-        showError('Please enter your name');
-        return;
-      }
+    // Validate name
+    if (!name) {
+      console.log('❌ Name validation failed');
+      showError('Please enter your name');
+      return;
+    }
 
-      // Validate attendance selection
-      if (!attendRadio) {
-        console.log('❌ Attendance validation failed');
-        showError('Please select whether you can attend');
-        return;
-      }
+    // Validate attendance selection
+    if (!attendRadio) {
+      console.log('❌ Attendance validation failed - no radio button selected');
+      showError('Please select whether you can attend');
+      return;
+    }
 
-      const attend = attendRadio.value;
-      console.log('✓ Validation passed, attend:', attend);
+    const attend = attendRadio.value;
+    console.log('✓ Validation passed, attend:', attend);
 
       // Prepare data (attach event info if present)
       const guestData = JSON.parse(sessionStorage.getItem('guestData') || '{}');
@@ -127,10 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
         rsvpForm.style.display = 'none';
         successMessage.style.display = 'block';
       }
-    });
   }
 
   function showError(message) {
+    console.log('⚠️ Showing error:', message);
     if (formStatus) {
       formStatus.className = 'form-status error';
       formStatus.textContent = '✗ ' + message;
@@ -138,6 +151,5 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         formStatus.style.display = 'none';
       }, 5000);
-    }
-  }
-});
+    } else {
+      alert(message);
