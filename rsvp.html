@@ -206,14 +206,84 @@
   </footer>
 
   <script type="module" src="js/navigation.js?v=5"></script>
-  <script type="module" src="js/rsvp-page.js?v=5"></script>
   
-  <!-- Inline script as backup -->
+  <!-- Complete inline RSVP handler -->
   <script>
     console.log('✅ Inline script running!');
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ DOM loaded - inline script');
-      document.getElementById('loadTime').textContent = new Date().toLocaleTimeString() + ' (inline)';
+    
+    window.addEventListener('load', function() {
+      console.log('✅ Page fully loaded');
+      
+      const form = document.getElementById('rsvpForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const successMsg = document.getElementById('successMessage');
+      const loadTimeEl = document.getElementById('loadTime');
+      
+      if (loadTimeEl) {
+        loadTimeEl.textContent = new Date().toLocaleTimeString();
+      }
+      
+      console.log('Elements:', {form: !!form, btn: !!submitBtn, success: !!successMsg});
+      
+      if (!form) {
+        console.error('Form not found!');
+        return;
+      }
+      
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('✅ FORM SUBMITTED VIA INLINE SCRIPT!');
+        
+        const name = document.getElementById('name').value.trim();
+        const guests = document.getElementById('guests').value;
+        const attendRadio = document.querySelector('input[name="attend"]:checked');
+        const message = document.getElementById('message').value.trim();
+        
+        console.log('Values:', {name, guests, attend: attendRadio?.value});
+        
+        // Validate
+        if (!name) {
+          alert('Please enter your name');
+          return false;
+        }
+        
+        if (!attendRadio) {
+          alert('Please select whether you can attend');
+          return false;
+        }
+        
+        // Save data
+        const rsvpData = {
+          name: name,
+          guests: parseInt(guests) || 1,
+          attend: attendRadio.value === 'yes',
+          message: message,
+          timestamp: new Date().toISOString()
+        };
+        
+        console.log('Saving RSVP:', rsvpData);
+        
+        // Save to localStorage
+        try {
+          const existing = JSON.parse(localStorage.getItem('rsvpsLocal') || '[]');
+          existing.push(rsvpData);
+          localStorage.setItem('rsvpsLocal', JSON.stringify(existing));
+          console.log('✅ Saved to localStorage!');
+        } catch(err) {
+          console.error('LocalStorage error:', err);
+        }
+        
+        // Hide form and show success
+        form.style.display = 'none';
+        if (successMsg) {
+          successMsg.style.display = 'block';
+        }
+        
+        console.log('✅ RSVP Complete!');
+        return false;
+      });
+      
+      console.log('✅ Form handler attached');
     });
   </script>
 </body>
